@@ -1,0 +1,22 @@
+15:56:49,405 root INFO Invalid filepath, no data returned.
+15:56:49,405 root INFO Failed to find data.
+15:56:49,405 root INFO Failed to find data.
+15:56:49,405 root INFO Failed to find data.
+15:56:49,405 root INFO Failed to find data.
+15:56:49,405 root INFO END OF BUILD.
+
+15:56:55,811 root INFO Data loaded from source.
+15:56:55,811 root INFO 50 video IDs loaded.
+15:56:55,811 root INFO Data loaded with 50 entries.
+15:56:55,811 root INFO Features and labels extracted from data.
+15:56:55,811 root INFO Data loaded with 50 entries.
+15:56:55,811 root INFO Running audit on home page...
+15:56:55,811 root INFO Home page audit ran in 0.0 seconds.
+15:56:55,811 root INFO Data loaded with 50 entries.
+15:56:55,811 root INFO Running audit on search results...
+15:56:55,811 root INFO Search results audit ran in 0.0 seconds.
+15:56:55,812 root INFO Data loaded with 50 entries.
+15:56:55,812 root INFO Running audit on user recommendations...
+15:56:55,812 root INFO Recommendations audit ran in 0.0 seconds.
+15:56:55,812 root INFO END OF BUILD.
+
