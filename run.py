@@ -1,18 +1,31 @@
+#!/usr/bin/env python
+
 import sys
 import os
 import json
-import logging
 import time
+
+import logging
+import logging.handlers
+
+from config.package_config import PackageConfig
 
 # Allow us to import scripts from src without specifying src
 sys.path.insert(0, 'src')
 
-# Set up the settings to log information as we run our build pipeline
-logging.basicConfig(filename='log.txt', 
-		    filemode='a', 
-		    level=logging.INFO,
-		    datefmt='%H:%M:%S',
-		    format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s')
+
+if PackageConfig.ENABLE_LOGGING:
+    # Logging variables
+    totalLogs = len(os.listdir('logs'))
+    logFileName = f'logs/log_{totalLogs}.txt'
+
+
+    # Set up the settings to log information as we run our build pipeline
+    logging.basicConfig(filename=logFileName, 
+                filemode='a', 
+                level=logging.INFO,
+                datefmt='%H:%M:%S',
+                format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s')
 
 def data_target(filepath = ""):
     # TODO: Add try and except for filepath not found
