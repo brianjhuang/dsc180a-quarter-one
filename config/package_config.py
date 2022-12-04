@@ -8,6 +8,7 @@ class PackageConfig(object):
 
     # Config for run.py
     ENABLE_LOGGING = True
+    OVERRIDE_WEIGHTS = False
 
     # API KEYS
     YOUTUBE_API_KEY = os.environ.get("YOUTUBE_DATA_API_KEY")

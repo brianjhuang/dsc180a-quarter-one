@@ -1,18 +1,23 @@
 #!/usr/bin/env python
 
+
 import sys
 import os
 import json
 import time
-
 import logging
 import logging.handlers
 
+# Config files
 from config.package_config import PackageConfig
 
 # Allow us to import scripts from src without specifying src
 sys.path.insert(0, 'src')
 
+# Imports from source folder
+from dataset.DatasetUtils import DatasetUtils
+from classifier.featureengineering.FeatureEngineeringModels import FeatureEngineeringModels
+from classifier.training.ClassifierTraining import ClassifierTraining
 
 if PackageConfig.ENABLE_LOGGING:
     # Logging variables
@@ -27,104 +32,147 @@ if PackageConfig.ENABLE_LOGGING:
                 datefmt='%H:%M:%S',
                 format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s')
 
-def data_target(filepath = ""):
-    # TODO: Add try and except for filepath not found
-    if filepath == "":
-        logging.info("Invalid filepath, no data returned.")
-        return []
+def getCommentDataFromIds(videoIds):
+    return
 
-    with open(filepath) as fh:
-        response = json.load(fh)
-        data = ['https://youtube.com/watch?v=' + entry['contentDetails']['videoId'] for entry in response['items']]
-    logging.info("Data loaded from source.")
-    logging.info(f"{len(data)} video IDs loaded.")
-    return data
+def loadData():
+    '''
+    This function will load data in from 
+    mongoDB so we can train our classifier.
+    '''
+    dataset = DatasetUtils()
 
-def history_target(data = []):
-    if len(data) == 0:
-        logging.info(f"Failed to find data.")
-        return data
+    return dataset
 
-    logging.info(f"Data loaded with {len(data)} entries.")
-    data = data
-    logging.info("Features and labels extracted from data.")
-    return data
+def fineTuneBranches(dataset):
+    '''
+    This function will allow us 
+    to fine tune each of the branches of 
+    our 'fusion network'.
 
-def audit_target(data = [], kind = ""):
-    if len(data) == 0:
-        logging.info(f"Failed to find data.")
-        return data
+    NOTE: This is only called once, afterwards it reloads pre-trained saved values.
+    '''
+    featureEngineeringModels = FeatureEngineeringModels(dataset_object=dataset)
 
-    logging.info(f"Data loaded with {len(data)} entries.")
-    data = data
-    if kind.lower() == "":
-        logging.info(f"What kind of audit are you trying to do? None specified, please try again.")
-        return data
+    # Generate Video Snippet fastText input features
+    featureEngineeringModels.prepare_fasttext_data(model_type='video_snippet')
 
-    if kind.lower() == "home":
-        logging.info("Running audit on home page...")
-        start = time.time()
-        end = time.time()
-        logging.info(f"Home page audit ran in {end - start} seconds.")
-    
-    if kind.lower() == "search":
-        logging.info("Running audit on search results...")
-        start = time.time()
-        end = time.time()
-        logging.info(f"Search results audit ran in {end - start} seconds.")
+    # Fine-tune a fastText model for Video Snippet
+    featureEngineeringModels.finetune_model(model_type='video_snippet')
 
-    if kind.lower() == "recommend":
-        logging.info("Running audit on user recommendations...")
-        start = time.time()
-        end = time.time()
-        logging.info(f"Recommendations audit ran in {end - start} seconds.")
-    return data
-    
+    # Generate Video Tags fastText input features
+    featureEngineeringModels.prepare_fasttext_data(model_type='video_tags')
+
+    # Fine-tune a fastText model for Video Tags
+    featureEngineeringModels.finetune_model(model_type='video_tags')
+
+    # Generate Video Transcript fastText input features
+    featureEngineeringModels.prepare_fasttext_data(model_type='video_transcript')
+
+    # Fine-tune a fastText model for Video Transcript
+    featureEngineeringModels.finetune_model(model_type='video_transcript')
+
+    # Generate Video Comments fastText input features
+    featureEngineeringModels.prepare_fasttext_data(model_type='video_comments')
+
+    # Fine-tune a fastText model for Video Comments
+    featureEngineeringModels.finetune_model(model_type='video_comments')
+    return
+
+def trainClassifier(dataset, override = PackageConfig.OVERRIDE_WEIGHTS):
+    '''
+    Train our classifier
+    '''
+    # Create our classifier (which also creates our feature embeddings)
+    classifierTrainingObject = ClassifierTraining(dataset_object=dataset)
+    if override or not os.path.exists('src/pseudoscientificvideosdetection/models/pseudoscience_model_final.hdf5'):
+        classifierTrainingObject.train_model()
+    else:
+        logging.info(f"Model has already been trained: {os.path.exists('src/pseudoscientificvideosdetection/models/pseudoscience_model_final.hdf5')}")
+
+    return
+
+def loadModel():
+    '''
+    Load in our model weights.
+    '''
+    return
+
+def predict():
+    '''
+    Make our prediction
+    '''
+    return
+
+def visualization():
+    '''
+    Generate our visualizations
+    '''
+
 def main(targets):
-    '''
-    Runs the main project build pipeline logic, given targets.
-
-    NOTE: This only ones the audit section. We are using a pre-trained 
-    model on our data. For model training, please reference the train.py script.
-
-    TODO: Implement train.py, complete implementation of the audit
-    '''
-
-    # Extract video data links to build user watch history
-    if 'data' in targets:
-        data_target()
-
-    # Build user watch history
-    if 'history' in targets:
-        history_target()
     
-    # Audit the YouTube HomePage for a user
-    if 'home' in targets:
-        audit_target("home")
-
-    # Audit the YouTube Search Results for a user
-    if 'search' in targets:
-        audit_target("search")
-
-    # Audit the YouTube Recommendations for a user
-    if 'recommend' in targets:
-        audit_target("recommend")
-
-    # Run the entire audit
     if 'all' in targets:
-        data = data_target()
-        history_target(data)
-        audit_target(data, "home")        
-        audit_target(data, "search")        
-        audit_target(data, "recommend")    
+        # LOAD OUR DATA
+        logging.info("Attempting to load in data...")
+        data = loadData()
+        logging.info("Data load succesful!")
 
-    # Run the entire pipeline on our test data
+        # FINE TUNE BRANCHES AND GET FASTTEXT EMBEDDINGS
+        logging.info("Attempted to fine tune fasttext...")
+        start = time.time()
+        fineTuneBranches(data)
+        end = time.time()
+        logging.info(f"Completed fine tuning in {end - start} seconds.")
+
+        # TRAIN OUR CLASSIFIER
+        logging.info("Attempted to train classifier...")
+        start = time.time()
+        trainClassifier(data, True)
+        end = time.time()
+        logging.info(f"Completed training in {end - start} seconds.")
+
     if 'test' in targets:
-        data = data_target('./test/testdata/test_user_watch_history_videos.json')
-        history_target(data)
-        audit_target(data, "home")        
-        audit_target(data, "search")        
-        audit_target(data, "recommend")
+        # LOAD OUR DATA
+        logging.info("Attempting to load in data...")
+        data = loadData()
+        logging.info("Data load succesful!")
+
+        # FINE TUNE BRANCHES AND GET FASTTEXT EMBEDDINGS
+        logging.info("Attempted to fine tune fasttext...")
+        start = time.time()
+        fineTuneBranches(data)
+        end = time.time()
+        logging.info(f"Completed fine tuning in {end - start} seconds.")
+
+        # TRAIN OUR CLASSIFIER
+        logging.info("Attempted to train classifier...")
+        start = time.time()
+        trainClassifier(data)
+        end = time.time()
+        logging.info(f"Completed training in {end - start} seconds.")
+        return
+    
+    # LOAD OUR DATA
+    if 'data' in targets:
+        logging.info("Attempting to load in data...")
+        data = loadData()
+        logging.info("Data load succesful!")
+
+    # FINE TUNE BRANCHES AND GET FASTTEXT EMBEDDINGS
+    if 'fineTune' in targets:
+        logging.info("Attempted to fine tune fasttext...")
+        start = time.time()
+        fineTuneBranches(data)
+        end = time.time()
+        logging.info(f"Completed fine tuning in {end - start} seconds.")
+
+    # TRAIN OUR CLASSIFIER
+    if 'train' in targets:
+        logging.info("Attempted to train classifier...")
+        start = time.time()
+        trainClassifier(data)
+        end = time.time()
+        logging.info(f"Completed training in {end - start} seconds.")
 
     return
 
