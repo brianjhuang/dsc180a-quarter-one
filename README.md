@@ -158,11 +158,12 @@ unzip wiki-news-300d-1M.vec.zip
 
 1. Create a MongoDB database called: ```youtube_pseudoscience_dataset``` either using Robo3T GUI or from the terminal.
 
-
 2. Create the following MongoDB collections under the ```youtube_pseudoscience_dataset``` database that you just created:
 - ```groundtruth_videos```
 - ```groundtruth_videos_comments```
 - ```groundtruth_videos_transcripts```
+
+I would recommend you do this in Robo3T GUI. You can right click the database you created earlier and create a new collection. Import the JSON data for each of the data groups into their correpsonding collections.
 
 **Note:** Although the original dataset comes with the data for ```groundtruth_videos``` and ```groundtruth_videos_transcripts```, it does not have the original comments. To train and run the model in it's entirety, you will need to get a YouTube API Key and download those values yourself.
 
@@ -186,6 +187,35 @@ Note: This is default **FALSE**.
 If you would like to change where files save or any other settings in the model, please refer to `config/package_config.py`.
 
 ## 1.3. Training the Classifier
+Before running anything, please start your MongoDB instance:
+```bash
+brew services start mongodb-community@6.0
+```
+
+To stop the service please do:
+```bash
+brew services stop mongodb-community@6.0
+```
+
+To see if your service is running you can do:
+```bash
+brew services list
+```
+
+To see URI/ConfigureL:
+```bash
+mongosh
+```
+
+Additional Info:
+```bash
+mongotop
+```
+
+Install Page/Help:
+
+https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/
+
 To train the model, `run.py all` will run the neccesary steps to load data, train fasttext embeddings, and make predictions. Please ensure that you have all the following files in the right place.
 
 **If you chose to collect the data:**
