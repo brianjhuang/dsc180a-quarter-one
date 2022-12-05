@@ -9,6 +9,7 @@ class PackageConfig(object):
     # Config for run.py
     ENABLE_LOGGING = True
     OVERRIDE_WEIGHTS = False
+    TRAIN_MODEL = False
 
     # RELATIVE PATH FOR AUDIT DATA Note: The path your run.py is executing look something like this:
     # User/repo/run.py, so final path would be User/repo/relative_path

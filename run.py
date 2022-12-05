@@ -370,14 +370,20 @@ def clean(paths = PackageConfig.CLEAN_PATHS):
 def main(targets):
     
     if 'all' in targets:
-        # LOAD OUR DATA
-        data = loadData()
 
-        # FINE TUNE BRANCHES AND GET FASTTEXT EMBEDDINGS
-        fineTuneBranches(data)
+        if PackageConfig.TRAIN_MODEL:
+            # LOAD OUR DATA
+            data = loadData()
 
-        # TRAIN OUR CLASSIFIER
-        trainClassifier(data)
+            # FINE TUNE BRANCHES AND GET FASTTEXT EMBEDDINGS
+            fineTuneBranches(data)
+
+            # TRAIN OUR CLASSIFIER
+            trainClassifier(data)
+        if not PackageConfig.TRAIN_MODEL:
+            print("Model training skipped...")
+            logging.info("Skipped model training...")
+
 
         # LOAD OUR MODEL
         model = loadModel()
