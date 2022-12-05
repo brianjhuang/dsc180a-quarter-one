@@ -411,6 +411,14 @@ def main(targets):
         return predictions
 
     if 'test' in targets:
+        # # LOAD OUR DATA
+        # data = loadData()
+
+        # # FINE TUNE BRANCHES AND GET FASTTEXT EMBEDDINGS
+        # fineTuneBranches(data)
+
+        # # TRAIN OUR CLASSIFIER
+        # trainClassifier(data)
 
         # LOAD OUR MODEL
         model = loadModel()
