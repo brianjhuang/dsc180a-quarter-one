@@ -197,7 +197,7 @@ class YouTubeVideoDownloader(object):
             os.umask(original_umask)
 
         # Call the download_video_comments.py script to get the given video_id's comments
-        os.system("python3 youtubescripts/download_video_comments.py {0} {1} {2} {3}".format(video_id, comments_dir, Config.LIMIT_PAGES_COMMENTS, self.YOUTUBE_API_KEY))
+        os.system("python3 src/youtubehelpers/youtubescripts/download_youtube_video_comments.py {0} {1} {2} {3}".format(video_id, comments_dir, Config.LIMIT_PAGES_COMMENTS, self.YOUTUBE_API_KEY))
         return
 
     def video_transcript_downloaded(self, video_id):
@@ -230,7 +230,7 @@ class YouTubeVideoDownloader(object):
 
         # Download Video Transcript
         try:
-            output = subprocess.check_output("bash youtubescripts/download_video_transcript.sh {0} {1} {2}".format(video_url, path, self.HTTPS_PROXY), shell=True)
+            output = subprocess.check_output("bash src/youtubehelpers/youtubescripts/download_video_transcript.sh {0} {1} {2}".format(video_url, path, self.HTTPS_PROXY), shell=True)
             if "HTTP_ERROR" in str(output):
                 return
             # Increase current HTTP Proxy usage

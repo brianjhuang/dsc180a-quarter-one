@@ -25,6 +25,7 @@ class Config(object):
 
     # HTTPS Proxies for Video Transcript download
     HTTPS_PROXIES_LIST = [
+        'locahost:80'
         # 'HOST:PORT',
         # 'HOST:PORT',
         # 'HOST:PORT',

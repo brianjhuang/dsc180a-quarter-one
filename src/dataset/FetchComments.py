@@ -54,15 +54,16 @@ class FetchComments:
             # convert back to json.
             json.dump(file_data, file, indent = 4)
 
-    def get_comments(self, videoIds, delay = 5):
+    def get_comments(self, videoIds, delay = 5, completed_requests = []):
         '''
         Given a set of video IDs, make requests to start getting IDs.
-        NOTE: THIS WILL TAKE A WHILE OT RUN
+        NOTE: THIS WILL TAKE A WHILE TO RUN
         '''
 
-        # Load in all the requests we have completed so far
-        comments = json.load(open("fetchedComments/raw_comment_responses.json"))
-        completed_requests = [list(comment.keys())[0] for comment in comments['comments']]
+        if len(completed_requests) <= 0:
+            # Load in all the requests we have completed so far
+            comments = json.load(open("fetchedComments/raw_comment_responses.json"))
+            completed_requests = [list(comment.keys())[0] for comment in comments['comments']]
 
         logging.info("\n")
         p_bar = tqdm(range((len(videoIds))))

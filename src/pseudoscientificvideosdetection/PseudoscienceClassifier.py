@@ -50,7 +50,7 @@ class PseudoscienceClassifier(object):
         self.FASTTEXT_VIDEO_COMMENTS = fasttext.load_model(path='{0}/fasttext_model_video_comments.bin'.format(self.FASTTEXT_MODELS_DIR))
 
         # Load the Pseudoscience Classifier
-        self.pseudoscience_model_filename = 'pseudoscientificvideosdetection/models/pseudoscience_model_final.hdf5'
+        self.pseudoscience_model_filename = 'src/pseudoscientificvideosdetection/models/pseudoscience_model_final.hdf5'
         if not os.path.isfile(self.pseudoscience_model_filename):
             exit('Cannot find a trained Pseudoscience Classifier')
         self.PSEUDOSCIENCE_CLASSIFIER = load_model(self.pseudoscience_model_filename)

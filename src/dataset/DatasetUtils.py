@@ -43,8 +43,8 @@ class DatasetUtils(object):
         self.groundtruth_videos_transcripts_col = self.db.groundtruth_videos_transcripts
 
         # Video Metadata Base Directories
-        self.VIDEO_TRANSCRIPT_BASE_DIR = 'src/videosdata/transcript'
-        self.VIDEO_COMMENTS_BASE_DIR = 'src/videosdata/comments'
+        self.VIDEO_TRANSCRIPT_BASE_DIR = '/videosdata/transcript'
+        self.VIDEO_COMMENTS_BASE_DIR = '/videosdata/comments'
 
         # Input Features filenames
         self.VIDEO_SNIPPET_FEATURES_FILENAME = 'src/dataset/data/video_snippet_features.p'
