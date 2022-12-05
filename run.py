@@ -70,24 +70,32 @@ def fineTuneBranches(dataset):
     try:
         featureEngineeringModels = FeatureEngineeringModels(dataset_object=dataset)
 
+        print("Generating video snippet features")
+        logging.info("Generating video snippet features")
         # Generate Video Snippet fastText input features
         featureEngineeringModels.prepare_fasttext_data(model_type='video_snippet')
 
         # Fine-tune a fastText model for Video Snippet
         featureEngineeringModels.finetune_model(model_type='video_snippet')
 
+        print("Generating video tag features")
+        logging.info("Generating video tag features")
         # Generate Video Tags fastText input features
         featureEngineeringModels.prepare_fasttext_data(model_type='video_tags')
 
         # Fine-tune a fastText model for Video Tags
         featureEngineeringModels.finetune_model(model_type='video_tags')
 
+        print("Generating video transcript features")
+        logging.info("Generating video transcript features")
         # Generate Video Transcript fastText input features
         featureEngineeringModels.prepare_fasttext_data(model_type='video_transcript')
 
         # Fine-tune a fastText model for Video Transcript
         featureEngineeringModels.finetune_model(model_type='video_transcript')
 
+        print("Generating video comments features")
+        logging.info("Generating video comments features")
         # Generate Video Comments fastText input features
         featureEngineeringModels.prepare_fasttext_data(model_type='video_comments')
 

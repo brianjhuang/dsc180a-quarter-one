@@ -358,7 +358,7 @@ class ClassifierTraining(object):
 
         # Copy the best model to the proper folder
         copyfile(src='{0}/K={1}_pseudoscience_model.hdf5'.format(self.TRAINING_MODELS_BASE_DIR, best_kfold),
-                 dst='{0}/K={1}_pseudoscience_model.hdf5'.format(self.BEST_MODEL_BASE_DIR, best_kfold))
+                 dst='pseudoscience_model_final.hdf5'.format(self.BEST_MODEL_BASE_DIR, best_kfold))
         return
 
     def store_kfold_predictions(self, y_true, predicted_probas, kfold_counter):
