@@ -156,7 +156,22 @@ unzip wiki-news-300d-1M.vec.zip
 
 ### 1.2.2. Create MongoDB Database and Collections
 
-1. Create a MongoDB database called: ```youtube_pseudoscience_dataset``` either using Robo3T GUI or from the terminal.
+Before running anything, please start your MongoDB instance:
+```bash
+brew services start mongodb-community@6.0
+```
+
+To stop the service please do:
+```bash
+brew services stop mongodb-community@6.0
+```
+
+When the service is started, you can connect to your local DB using Robo3T's GUI. Find information on your local service by using:
+```bash
+mongosh
+```
+
+1. Create a MongoDB database called: ```youtube_pseudoscience_dataset``` either using Robo3T GUI or from the terminal. 
 
 2. Create the following MongoDB collections under the ```youtube_pseudoscience_dataset``` database that you just created:
 - ```groundtruth_videos```
