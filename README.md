@@ -8,6 +8,8 @@ Given the scope of the quarter, the goal of this project was to reproduce the cl
 
 The classifier was run on this mini-dataset and the following conclusions were made:
 
+Note: Dark mode makes the labels hard to read, please try using light mode instead.
+
 ![plot](https://github.com/brianjhuang/dsc180a-quarter-one/blob/master/plots/results.png)
 
 In the original audit, it was shown that search results had MORE pseudoscience videos populated. In my results, it was shown that pseudoscience videos populated search results much less.
