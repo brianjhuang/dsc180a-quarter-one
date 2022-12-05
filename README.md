@@ -2,7 +2,26 @@
 ### Brian Huang
 #### Reproduction of "It is just a flu": Assessing the Effect of Watch History on YouTube's Pseudoscientific Video Recommendations (Papadamou et al. 2020)
 ## Overview
-To be added
+The following project is a reproduction of "It is just a flu": Assessing the Effect of Watch History on YouTube's Pseudoscientific Video Recommendations (Papadamou et al. 2020). It was done as the Quarter 1 Project for DSC 180A under Professor Stuart Geiger. 
+
+Given the scope of the quarter, the goal of this project was to reproduce the classifier in the original model and run it on a mini-audit of YouTube search results. In the audit, they used COVID-19 search terms and flat-earth search terms, so the mini dataset was constructed by taking the first ten results of the following search terms: `['flat earth', 'covid19', 'vaccination']`. These terms were consistent with the original terms. Another set of conspiracies was added by including `'Alex Jones'` (a well known conspiracy theorist) as another search term. The top six videos were taken for this search.
+
+The classifier was run on this mini-dataset and the following conclusions were made:
+
+![plot](https://github.com/brianjhuang/dsc180a-quarter-one/blob/master/plots/results.png)
+
+In the original audit, it was shown that search results had MORE pseudoscience videos populated. In my results, it was shown that pseudoscience videos populated search results much less.
+
+One thing to note about this result is that many of the conspiracy videos that were present in the audit when it was first done have now been taken down from YouTube. In fact only 86% of the original dataset comments were still availabe on YouTube. This may have skewed the classifier more towards predicting scientific vs pseudoscience. Another thing to note, in regards to model accuracy, is that the dataset we audit on is labelled by myself, and many of the videos are news videos covering rising pseudoscience, not actual pseudoscience. More details on the findings, results, and methods are detailed in the final report submitted on GradeScope.
+
+The project relies heavily on three things: The dataset, MongoDB to store the dataset, and the model weights. Because of this, it is quite difficult to launch on DSMLP.
+
+- While you could get the dataset, the comments are not provided due to YouTube TOS. Only comment IDs may be shared, meaning all comments need be scraped on your own. This takes multiple days.
+- Model weights can be shared, but even compressed take around 25gb.
+- Test data could be made, but the library provided by the original researchers heavily relies on fetching data from a MongoDB instance. This is difficult to replicate in DSMLP. 
+
+These changes have been brought up with Professor Rampure. This repo can be reproduced locally, and if model weights are needed please reach out to bjh009@ucsd.edu. I would be happy to hop on Zoom as well and demonstrate the repository in it's working state or provide any other assistance in the grading process.
+
 ## Installation
 Follow the steps below to install and configure all prerequisites for both the training and usage of the Pseudoscientific Content Detection Classifier (Part 1) and conduct the 'mini-audit' (Part 2).
 
