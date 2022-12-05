@@ -175,6 +175,21 @@ To train the model, `run.py all` will run the neccesary steps to load data, trai
 - In `src/pseudoscientificvideosdetection/models/feature_extraction` ensure that there are four files ending in `.bin` (these are our model weights) and one ending in `.vec` (the fasttext pre-trained vectors loaded in earlier). 
 - In `src/pseudoscientificvideosdetection/models` you should find `pseudoscience_model_final.hdf5`
 
+## 1.4. Using the Classifier and Performing the Audit
+
+`run.py all` handles the predictions and saves them to the `runs/all_runs` folder. You can see the results of the predictions save in a JSON file there.
+
+`run.py test` handles predictions on a pred-downloaded set of YouTube data in `test/test_data`. It saves values to `runs/test_runs`.
+
+If you would like to run the audit on YOUR OWN DATA:
+
+Change the values within `data/raw_data`. Include your own list of YouTube videoIds and labels in their corresponding files. If you would like to add your own files but run inference with that data, please change the following parameters in `package_config.py`:
+```python
+DATA_FILE_NAME = "video_ids"
+AUDIT_DATA = f"data/raw_data/{DATA_FILE_NAME}.txt"
+DOWNLOADED_AUDIT_DATA = "data/test_data/"
+```
+
 ### Citations
 ```latex
 @article{papadamou2020just,
