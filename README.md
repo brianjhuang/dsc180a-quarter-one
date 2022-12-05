@@ -158,6 +158,8 @@ If you would like to avoid training, please reach out to `bjh009@ucsd.edu` for m
 
 You can also skip model training entirely if you have the weights by changing `TRAIN_MODEL` to False in `config/package_config.py`.
 
+Note: This is default **FALSE**.
+
 If you would like to change where files save or any other settings in the model, please refer to `config/package_config.py`.
 
 ## 1.3. Training the Classifier
@@ -172,3 +174,13 @@ To train the model, `run.py all` will run the neccesary steps to load data, trai
 - In `src/dataset/data` ensure that `feature_engineering_models_data` contains four files ending in `train_data.txt` and `input_features` contains four files ending in `embeddings.p`. `data` should also contain four files ending with `features.p`.
 - In `src/pseudoscientificvideosdetection/models/feature_extraction` ensure that there are four files ending in `.bin` (these are our model weights) and one ending in `.vec` (the fasttext pre-trained vectors loaded in earlier). 
 - In `src/pseudoscientificvideosdetection/models` you should find `pseudoscience_model_final.hdf5`
+
+### Citations
+```latex
+@article{papadamou2020just,
+    title={'It is just a flu': Assessing the Effect of Watch History on YouTube's Pseudoscientific Video Recommendations},
+    author={Papadamou, Kostantinos and Zannettou, Savvas and Blackburn, Jeremy and De Cristofaro, Emiliano and Stringhini, Gianluca and Sirivianos, Michael},
+    journal={arXiv preprint arXiv:2010.11638},
+    year={2020}
+}
+```
