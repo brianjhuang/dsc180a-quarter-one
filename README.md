@@ -16,7 +16,7 @@ In the original audit, it was shown that search results had MORE pseudoscience v
 
 One thing to note about this result is that many of the conspiracy videos that were present in the audit when it was first done have now been taken down from YouTube. In fact only 86% of the original dataset comments were still availabe on YouTube. This may have skewed the classifier more towards predicting scientific vs pseudoscience. Another thing to note, in regards to model accuracy, is that the dataset we audit on is labelled by myself, and many of the videos are news videos covering rising pseudoscience, not actual pseudoscience. More details on the findings, results, and methods are detailed in the final report submitted on GradeScope.
 
-### Disclaimer to the Graders
+## Disclaimer to the Graders
 
 The project relies heavily on three things: The dataset, MongoDB to store the dataset, and the model weights. Because of this, it is quite difficult to launch on DSMLP.
 
