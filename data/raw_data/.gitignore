@@ -2,5 +2,5 @@
 *
 # Except this file
 !.gitignore
-!raw_data
-!test_data
+!video_ids.txt
+!video_labels.txt
