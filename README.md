@@ -24,7 +24,7 @@ The project relies heavily on three things: The dataset, MongoDB to store the da
 - Model weights can be shared, but even compressed take around 25gb.
 - Test data could be made, but the library provided by the original researchers heavily relies on fetching data from a MongoDB instance. This is difficult to replicate in DSMLP. 
 
-These changes have been brought up with Professor Rampure. This repo can be reproduced locally, and if model weights are needed please reach out to bjh009@ucsd.edu. I would be happy to hop on Zoom as well and demonstrate the repository in it's working state or provide any other assistance in the grading process.
+These changes have been brought up with Professor Rampure. This repo can be reproduced locally, and if model weights are needed please reach out to bjh009@ucsd.edu. I would be happy to hop on Zoom as well and demonstrate the repository in it's working state or provide any other assistance in the grading process. For now I've been told to detail how the project would be reproduced, without providing model weights. The original dataset is provided, but requires access request approval from the original researchers. Please keep that in mind as you work with this repository as reproducing this project takes a bit of waiting.
 
 ## Installation
 Follow the steps below to install and configure all prerequisites for both the training and usage of the Pseudoscientific Content Detection Classifier (Part 1) and conduct the 'mini-audit' (Part 2).
